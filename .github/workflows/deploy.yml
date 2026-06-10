@@ -52,11 +52,11 @@ jobs:
             # Remove old image
             docker rmi lead-scraper:latest || true
 
-            # Create .env file
+            # Create .env file from secrets
             echo "Creating .env file..."
-            cat > .env << 'ENVEOF'
+            cat > .env << ENVEOF
             PORT=5000
-            MONGODB_URI=mongodb+srv://younusdev981_db_user:wn4Vsji.6LTMNMA@mern-app.tzzqtfj.mongodb.net/Leads-Scrapper
+            MONGODB_URI=${{ secrets.MONGODB_URI }}
             REDIS_HOST=lead-scraper-redis
             REDIS_PORT=6379
             PROXY_LIST=
