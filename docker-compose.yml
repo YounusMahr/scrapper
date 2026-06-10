@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  app:
+    build: .
+    container_name: lead-scraper
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    restart: always
+
   redis:
     image: redis:7-alpine
     container_name: lead-scraper-redis
