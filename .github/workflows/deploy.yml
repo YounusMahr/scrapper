@@ -60,13 +60,13 @@ jobs:
 
             # Create .env file from secrets
             echo "Creating .env file..."
-            cat > .env << ENVEOF
+            cat > .env << 'EOF'
 PORT=5000
 MONGODB_URI=${{ secrets.MONGODB_URI }}
 REDIS_HOST=lead-scraper-redis
 REDIS_PORT=6379
 PROXY_LIST=
-ENVEOF
+EOF
 
             # Build new image
             echo "Building Docker image..."
