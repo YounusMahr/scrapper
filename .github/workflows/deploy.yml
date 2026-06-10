@@ -19,6 +19,12 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            # Clone repo if it doesn't exist
+            if [ ! -d "/home/${{ secrets.EC2_USERNAME }}/scrapper/.git" ]; then
+              echo "Cloning repository..."
+              git clone https://github.com/YounusMahr/scrapper.git /home/${{ secrets.EC2_USERNAME }}/scrapper
+            fi
+
             cd /home/${{ secrets.EC2_USERNAME }}/scrapper
 
             # Pull latest code
@@ -55,12 +61,12 @@ jobs:
             # Create .env file from secrets
             echo "Creating .env file..."
             cat > .env << ENVEOF
-            PORT=5000
-            MONGODB_URI=${{ secrets.MONGODB_URI }}
-            REDIS_HOST=lead-scraper-redis
-            REDIS_PORT=6379
-            PROXY_LIST=
-            ENVEOF
+PORT=5000
+MONGODB_URI=${{ secrets.MONGODB_URI }}
+REDIS_HOST=lead-scraper-redis
+REDIS_PORT=6379
+PROXY_LIST=
+ENVEOF
 
             # Build new image
             echo "Building Docker image..."
