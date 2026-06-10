@@ -1,0 +1,5 @@
+node_modules/
+.env
+storage/
+.crawlee/
+package-lock.json

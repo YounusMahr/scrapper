@@ -1,0 +1,20 @@
+{
+  "watch": [
+    "server.js",
+    "config/**/*.js",
+    "controllers/**/*.js",
+    "models/**/*.js",
+    "queues/**/*.js",
+    "routes/**/*.js",
+    "services/**/*.js",
+    "workers/**/*.js"
+  ],
+  "ignore": [
+    "node_modules",
+    "storage",
+    "crawlee_storage",
+    "test-scrape.js",
+    "*.log"
+  ],
+  "ext": "js,json"
+}
