@@ -1,4 +1,4 @@
-import { PlaywrightCrawler, Configuration, ProxyConfiguration } from 'crawlee';
+import { PlaywrightCrawler, Configuration, ProxyConfiguration } from '@crawlee/playwright';
 import crypto from 'crypto';
 import { getRandomProxy, getFreshProxy, markFailed, hasProxies, getProxyStats, reloadProxies } from '../config/proxies.js';
 import { fireWebhook } from './webhookService.js';
