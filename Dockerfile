@@ -1,23 +1,13 @@
-FROM node:20-slim
-
-# Install system utilities needed for playwright setup
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    wget \
-    gnupg \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+FROM mcr.microsoft.com/playwright:v1.44.1-jammy
 
 WORKDIR /app
 
 COPY package*.json ./
 
-# Instruct Playwright to skip browser downloads during npm install
+# Skip browser downloads since the official Playwright image already has them pre-installed
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
 RUN npm install --omit=dev && npm cache clean --force
-
-# Install ONLY the Chromium browser and its system dependencies
-RUN npx playwright install --with-deps chromium
 
 COPY . .
 
