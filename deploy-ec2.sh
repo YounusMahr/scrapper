@@ -60,11 +60,13 @@ PROXY_LIST=
 EOF
 echo ".env file created."
 
-# Step 6: Stop old containers
-echo "[6/7] Cleaning up old containers..."
+# Step 6: Stop old containers and prune disk space
+echo "[6/7] Cleaning up old containers and freeing up disk space..."
 docker stop lead-scraper || true
 docker rm lead-scraper || true
 docker rmi lead-scraper:latest || true
+docker system prune -f
+docker builder prune -f
 
 # Step 7: Build and run
 echo "[7/7] Building and starting containers..."

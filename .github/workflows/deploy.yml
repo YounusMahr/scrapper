@@ -48,13 +48,13 @@ jobs:
                 sudo apt install certbot python3-certbot-nginx -y
             fi
 
-            # Stop existing containers
-            echo "Stopping old containers..."
+            # Stop existing containers & free up disk space
+            echo "Stopping old containers and freeing up disk space..."
             docker stop lead-scraper || true
             docker rm lead-scraper || true
-
-            # Remove old image
             docker rmi lead-scraper:latest || true
+            docker system prune -f
+            docker builder prune -f
 
             # Create .env file from secrets
             echo "Creating .env file..."
@@ -87,7 +87,8 @@ jobs:
             echo "Nginx proxy configuration should be handled inside the containerized nginx-proxy (syncboard)."
 
             # Clean up
-            docker image prune -f
+            docker system prune -f
+            docker builder prune -f
 
             # Verify
             echo ""
