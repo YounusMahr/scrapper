@@ -72,10 +72,17 @@ echo "[7/7] Building and starting containers..."
 # Build the app image
 docker build -t lead-scraper:latest .
 
-# Start the app
+# Start the app (attaching to syncboard_default network if it exists)
+NET_FLAG=""
+if docker network inspect syncboard_default &>/dev/null; then
+  echo "Network syncboard_default detected. Attaching container..."
+  NET_FLAG="--network syncboard_default"
+fi
+
 docker run -d \
   --name lead-scraper \
   --restart always \
+  $NET_FLAG \
   -p 5000:5000 \
   --env-file .env \
   lead-scraper:latest

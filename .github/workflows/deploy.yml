@@ -67,35 +67,24 @@ jobs:
             echo "Building Docker image..."
             docker build -t lead-scraper:latest .
 
-            # Start the app
+            # Start the app (attaching to syncboard_default network if it exists)
             echo "Starting Lead Scraper..."
+            NET_FLAG=""
+            if docker network inspect syncboard_default &>/dev/null; then
+              echo "Network syncboard_default detected. Attaching container..."
+              NET_FLAG="--network syncboard_default"
+            fi
+
             docker run -d \
               --name lead-scraper \
               --restart always \
+              $NET_FLAG \
               -p 5000:5000 \
               --env-file .env \
               lead-scraper:latest
 
-            # Setup Nginx
-            echo "Configuring Nginx..."
-            sudo mkdir -p /var/www/certbot
-            sudo cp nginx/scrapper.zentraai.tech.conf.http-only /etc/nginx/sites-available/scrapper.zentraai.tech
-            sudo ln -sf /etc/nginx/sites-available/scrapper.zentraai.tech /etc/nginx/sites-enabled/
-            sudo rm -f /etc/nginx/sites-enabled/default
-            sudo nginx -t
-            sudo systemctl reload nginx
-
-            # Setup SSL with Certbot (only if not already set up)
-            echo "Setting up SSL..."
-            if [ ! -d /etc/letsencrypt/live/scrapper.zentraai.tech ]; then
-                sudo certbot --nginx -d scrapper.zentraai.tech --non-interactive --agree-tos --email admin@zentraai.tech
-            else
-                echo "SSL already configured. Renewing..."
-                sudo certbot renew --quiet
-            fi
-
-            # Auto-renewal cron job
-            echo "0 0,12 * * * root certbot renew --quiet" | sudo tee /etc/cron.d/certbot-renew > /dev/null
+            # Host-level Nginx setup is bypassed because the user runs containerized nginx-proxy
+            echo "Nginx proxy configuration should be handled inside the containerized nginx-proxy (syncboard)."
 
             # Clean up
             docker image prune -f
