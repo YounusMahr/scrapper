@@ -14,7 +14,7 @@ COPY package*.json ./
 # Instruct Playwright to skip browser downloads during npm install
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
-RUN npm ci --only=production && npm cache clean --force
+RUN npm install --omit=dev && npm cache clean --force
 
 # Install ONLY the Chromium browser and its system dependencies
 RUN npx playwright install --with-deps chromium
