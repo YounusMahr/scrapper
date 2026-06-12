@@ -21,6 +21,11 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Explicitly serve main dashboard page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Mount API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api', jobRoutes);
