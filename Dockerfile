@@ -7,7 +7,7 @@ COPY package*.json ./
 # Skip browser downloads since the official Playwright image already has them pre-installed
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
-RUN npm install --omit=dev && npm cache clean --force
+RUN npm install --omit=dev --no-audit --no-fund && npm cache clean --force
 
 COPY . .
 
