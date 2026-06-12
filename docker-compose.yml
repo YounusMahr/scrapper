@@ -10,6 +10,9 @@ services:
       - .env
     depends_on:
       - redis
+    networks:
+      - default
+      - syncboard_default
     restart: always
 
   redis:
@@ -19,7 +22,13 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
+    networks:
+      - default
     restart: always
 
 volumes:
   redis_data:
+
+networks:
+  syncboard_default:
+    external: true
