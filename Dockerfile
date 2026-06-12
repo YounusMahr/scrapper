@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM apify/actor-node:20
 
 WORKDIR /app
 

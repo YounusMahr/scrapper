@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Lead Scraper Platform</title>
+  <!-- Google Fonts - Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="login.css">
+  <!-- Google Identity Services SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+  <!-- Background Gradients -->
+  <div class="gradient-bg">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <div class="login-wrapper">
+    <div class="login-card glass-card">
+      <div class="login-header">
+        <div class="logo">
+          <svg class="icon-svg logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+          <span class="logo-text">LeadScraper</span>
+        </div>
+        <h1 class="login-title">Welcome Back</h1>
+        <p class="login-desc">Sign in with your Google account to access the extraction dashboard and export email leads.</p>
+      </div>
+
+      <!-- Google Sign-In Button Container -->
+      <div class="google-btn-container">
+        <div id="google-signin-btn"></div>
+      </div>
+      
+      <div class="login-footer">
+        <p>Enterprise-grade Lead Generation Services &copy; 2026</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Javascript Logic -->
+  <script src="login.js"></script>
+</body>
+</html>

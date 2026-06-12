@@ -3,3 +3,4 @@ node_modules/
 storage/
 .crawlee/
 package-lock.json
+proxyscrape_premium_http_proxies.txt

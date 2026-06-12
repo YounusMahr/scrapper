@@ -55,9 +55,7 @@ fi
 echo "[5/7] Creating .env file..."
 cat > .env << 'EOF'
 PORT=5000
-MONGODB_URI=mongodb+srv://younusdev981_db_user:wn4Vsji.6LTMNMA@mern-app.tzzqtfj.mongodb.net/Leads-Scrapper
-REDIS_HOST=lead-scraper-redis
-REDIS_PORT=6379
+GOOGLE_CLIENT_ID=359359481405-cbuspr0m3klfs7grkbd6pba5vf4ij24f.apps.googleusercontent.com
 PROXY_LIST=
 EOF
 echo ".env file created."
@@ -66,8 +64,6 @@ echo ".env file created."
 echo "[6/7] Cleaning up old containers..."
 docker stop lead-scraper || true
 docker rm lead-scraper || true
-docker stop lead-scraper-redis || true
-docker rm lead-scraper-redis || true
 docker rmi lead-scraper:latest || true
 
 # Step 7: Build and run
@@ -76,20 +72,11 @@ echo "[7/7] Building and starting containers..."
 # Build the app image
 docker build -t lead-scraper:latest .
 
-# Start Redis
-docker run -d \
-  --name lead-scraper-redis \
-  --restart always \
-  -p 6379:6379 \
-  redis:7-alpine
-
 # Start the app
 docker run -d \
   --name lead-scraper \
   --restart always \
   -p 5000:5000 \
-  --link lead-scraper-redis:redis \
-  -e REDIS_HOST=lead-scraper-redis \
   --env-file .env \
   lead-scraper:latest
 

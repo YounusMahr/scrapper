@@ -52,8 +52,6 @@ jobs:
             echo "Stopping old containers..."
             docker stop lead-scraper || true
             docker rm lead-scraper || true
-            docker stop lead-scraper-redis || true
-            docker rm lead-scraper-redis || true
 
             # Remove old image
             docker rmi lead-scraper:latest || true
@@ -62,22 +60,12 @@ jobs:
             echo "Creating .env file..."
             printf "%s\n" \
               "PORT=5000" \
-              "MONGODB_URI=${{ secrets.MONGODB_URI }}" \
-              "REDIS_HOST=lead-scraper-redis" \
-              "REDIS_PORT=6379" \
-              "PROXY_LIST=" > .env
+              "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" \
+              "PROXY_LIST=${{ secrets.PROXY_LIST }}" > .env
 
             # Build new image
             echo "Building Docker image..."
             docker build -t lead-scraper:latest .
-
-            # Start Redis
-            echo "Starting Redis..."
-            docker run -d \
-              --name lead-scraper-redis \
-              --restart always \
-              -p 6379:6379 \
-              redis:7-alpine
 
             # Start the app
             echo "Starting Lead Scraper..."
@@ -85,8 +73,6 @@ jobs:
               --name lead-scraper \
               --restart always \
               -p 5000:5000 \
-              --link lead-scraper-redis:redis \
-              -e REDIS_HOST=lead-scraper-redis \
               --env-file .env \
               lead-scraper:latest
 
